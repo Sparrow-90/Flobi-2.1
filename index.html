@@ -5,8 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>SmartParent z EduPlant</title>
-    <!-- Blokada ostrzeżenia Tailwind CDN w konsoli dla wersji produkcyjnej -->
+    <!-- Polyfill dla process.env wymagany przez SDK Gemini w środowisku przeglądarkowym -->
     <script>
+        window.process = { 
+            env: { 
+                API_KEY: "" // Klucz jest wstrzykiwany przez środowisko uruchomieniowe
+            } 
+        };
+        
+        // Wyciszenie ostrzeżenia Tailwind CDN
         (function() {
             const originalWarn = console.warn;
             console.warn = function(...args) {
@@ -32,9 +39,17 @@
             height: 100vh;
             height: -webkit-fill-available;
             background-color: #000;
+            margin: 0;
+            padding: 0;
         }
         
-        /* Absolutne ukrywanie pasków przewijania */
+        #root {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
         .no-scrollbar::-webkit-scrollbar {
             display: none !important;
             width: 0 !important;
@@ -45,7 +60,6 @@
             scrollbar-width: none !important;
         }
 
-        /* Globalne wyłączenie scrollbarów na wypadek renderowania dynamicznego */
         * {
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -54,22 +68,23 @@
             display: none;
         }
 
-        /* Poprawka dla iOS - unikanie przesunięć layoutu przy klawiaturze */
         input, select, textarea {
             font-size: 16px !important;
         }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "recharts": "https://esm.sh/recharts@2.15.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
-  }
-}
-</script>
+    <script type="importmap">
+    {
+      "imports": {
+        "recharts": "https://esm.sh/recharts@2.15.0",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+      }
+    }
+    </script>
+    <!-- Główny punkt wejścia aplikacji -->
+    <script type="module" src="./index.tsx"></script>
 </head>
 <body class="no-scrollbar">
     <div id="root"></div>
