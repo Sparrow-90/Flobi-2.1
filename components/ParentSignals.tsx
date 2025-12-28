@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { UserStats } from '../types';
+import { UserStats } from '../types.ts';
 
 interface ParentSignalsProps {
   stats: UserStats;
@@ -43,7 +43,6 @@ const ParentSignals: React.FC<ParentSignalsProps> = ({ stats, onSendGift, onVeri
   return (
     <div className="flex flex-col space-y-6 pb-24 animate-in fade-in slide-in-from-right duration-500">
       
-      {/* Weryfikacja Misji Offline */}
       {stats.pendingOfflineMission && (
         <section className="bg-indigo-600 p-6 rounded-[32px] border border-white/20 shadow-2xl animate-pulse-subtle">
           <div className="flex items-center mb-4">
@@ -76,7 +75,6 @@ const ParentSignals: React.FC<ParentSignalsProps> = ({ stats, onSendGift, onVeri
         </section>
       )}
 
-      {/* Header Report */}
       <section className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-[32px] border border-white/10 shadow-xl">
         <div className="flex items-center mb-4">
           <div className="w-12 h-12 bg-indigo-500/20 rounded-2xl flex items-center justify-center text-2xl mr-4 border border-indigo-500/30">
@@ -109,7 +107,6 @@ const ParentSignals: React.FC<ParentSignalsProps> = ({ stats, onSendGift, onVeri
         </div>
       </section>
 
-      {/* NOWE: Wykryte Wzorce Zachowań */}
       <section className="bg-white/5 p-6 rounded-[32px] border border-white/10 backdrop-blur-md">
         <div className="flex items-center space-x-3 mb-6">
           <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center text-xl border border-blue-500/30">🧠</div>
@@ -138,7 +135,6 @@ const ParentSignals: React.FC<ParentSignalsProps> = ({ stats, onSendGift, onVeri
         </div>
       </section>
 
-      {/* Focus Insights */}
       <section className="bg-white/5 p-6 rounded-[32px] border border-white/10 backdrop-blur-md">
         <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-4">Dynamika Koncentracji</h4>
         <div className="flex items-center justify-between bg-black/20 p-4 rounded-2xl border border-white/5">

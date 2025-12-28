@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { WeeklyGoal } from '../types';
+import { WeeklyGoal } from '../types.ts';
 
 interface WeeklyGoalSelectorProps {
   onConfirm: (goal: WeeklyGoal) => void;

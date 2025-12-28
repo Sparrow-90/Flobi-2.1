@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
-import { GrowthStage } from '../types';
-import { STAGE_CONFIG } from '../constants';
+import { GrowthStage } from '../types.ts';
+import { STAGE_CONFIG } from '../constants.ts';
 
 interface LevelUpViewProps {
   newLevel: number;
@@ -29,7 +29,6 @@ export default function LevelUpView({ newLevel, newStage, petName, onClose }: Le
   return (
     <div className="absolute inset-0 bg-gradient-to-b from-[#e0f7fa] via-[#e8f5e9] to-[#ffffff] z-[400] flex flex-col items-center pt-10 pb-8 px-6 overflow-hidden animate-in fade-in duration-700">
       
-      {/* Przycisk zamknięcia - dopasowany margines */}
       <button 
         onClick={onClose}
         className="absolute top-5 right-5 w-10 h-10 bg-white/70 border border-white/80 rounded-2xl flex items-center justify-center text-[#365357] shadow-lg backdrop-blur-md active:scale-90 transition-all z-[450]"
@@ -39,7 +38,6 @@ export default function LevelUpView({ newLevel, newStage, petName, onClose }: Le
         </svg>
       </button>
 
-      {/* Konfetti w tle */}
       <div className="absolute inset-0 pointer-events-none">
         {particles.map(p => (
           <div 
@@ -59,7 +57,6 @@ export default function LevelUpView({ newLevel, newStage, petName, onClose }: Le
         ))}
       </div>
 
-      {/* Header - Bardziej kompaktowy */}
       <div className="relative z-10 flex flex-col items-center text-center space-y-1 shrink-0 mb-4">
         <div className="px-4 py-1.5 bg-emerald-500 text-white rounded-full text-[9px] font-black uppercase tracking-[0.2em] shadow-md shadow-emerald-200 animate-bounce mb-1">
           NIESAMOWITE!
@@ -72,14 +69,12 @@ export default function LevelUpView({ newLevel, newStage, petName, onClose }: Le
         </p>
       </div>
 
-      {/* Centralna sekcja wizualna - Skalowanie dla mniejszych ekranów */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full flex-grow max-h-[340px] mb-4">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[220px] h-[220px] border-[1.5px] border-emerald-400/20 rounded-full animate-spin-slow" />
           <div className="absolute inset-0 bg-emerald-400/10 blur-[80px] rounded-full scale-110 animate-pulse" />
         </div>
 
-        {/* Cień platformy */}
         <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-36 h-6 bg-black/5 rounded-[100%] blur-lg scale-x-125 animate-pulse" />
         
         <div className="relative flex flex-col items-center animate-evolution-zoom">
@@ -111,7 +106,6 @@ export default function LevelUpView({ newLevel, newStage, petName, onClose }: Le
         </div>
       </div>
 
-      {/* Sekcja nagród - Zoptymalizowana wysokość */}
       <div className="relative z-10 w-full space-y-4 shrink-0">
         <div className="bg-white/70 backdrop-blur-xl p-5 rounded-[32px] border border-white shadow-lg text-center">
            <h4 className="text-slate-500 font-black text-[9px] mb-4 uppercase tracking-[0.15em] opacity-80">Nowe nagrody:</h4>

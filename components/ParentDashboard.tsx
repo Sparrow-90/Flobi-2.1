@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { UserStats } from '../types';
+import { UserStats } from '../types.ts';
 
 interface ParentDashboardProps {
   stats: UserStats;
@@ -36,7 +36,6 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ stats }) => {
 
   return (
     <div className="flex flex-col space-y-6 pb-12 animate-in fade-in slide-in-from-left duration-500">
-      {/* Summary Banner */}
       <section className="bg-gradient-to-br from-indigo-600 to-blue-800 p-6 rounded-[32px] text-white shadow-xl border border-white/10">
         <h3 className="text-xl font-black mb-1">Status Balansu</h3>
         <p className="opacity-70 text-[10px] mb-4 uppercase tracking-widest font-bold">Tryb: Zrównoważony Rozwój</p>
@@ -58,7 +57,6 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ stats }) => {
         </div>
       </section>
 
-      {/* STYLOWANE: Wskazówki Przewodnika */}
       <section className="bg-white/5 border border-white/10 p-6 rounded-[32px] shadow-2xl backdrop-blur-md relative overflow-hidden group">
         <div className="absolute -top-10 -left-10 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all duration-700" />
         <div className="flex items-center space-x-3 mb-4 relative z-10">
@@ -76,7 +74,6 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ stats }) => {
         </div>
       </section>
 
-      {/* Weekly Goals Quick View */}
       {stats.activeGoals.filter(g => g.status === 'active').length > 0 && (
         <section className="bg-white/5 p-6 rounded-[32px] border border-white/10 backdrop-blur-md">
             <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Postęp Celów Tygodniowych</h4>
@@ -96,7 +93,6 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ stats }) => {
         </section>
       )}
 
-      {/* Bar Chart */}
       <section className="bg-white/5 p-6 rounded-[32px] border border-white/10 backdrop-blur-md">
         <h3 className="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-6">Aktywność Tygodniowa (Min)</h3>
         <div className="h-48 w-full">
@@ -111,7 +107,6 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ stats }) => {
         </div>
       </section>
 
-      {/* Donut Chart and Stats Table */}
       <section className="bg-white/5 p-6 rounded-[32px] border border-white/10">
         <div className="flex items-center justify-between">
           <div className="h-32 w-32 relative">

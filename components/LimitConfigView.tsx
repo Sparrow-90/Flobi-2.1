@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { WeeklyGoal } from '../types';
+import { WeeklyGoal } from '../types.ts';
 
 interface LimitSettings {
   baseMinutes: number;
@@ -34,7 +34,6 @@ const LimitConfigView: React.FC<LimitConfigViewProps> = ({ activeGoals, onAddGoa
         <p className="text-xs text-slate-400 font-medium">Zarządzaj czasem rozrywki i nagrodami</p>
       </header>
 
-      {/* NEW: Quick Reward Center for Parents */}
       <section className="bg-gradient-to-br from-indigo-600 to-blue-800 p-6 rounded-[32px] border border-white/10 shadow-2xl relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-3xl" />
         <div className="relative z-10">
@@ -67,7 +66,6 @@ const LimitConfigView: React.FC<LimitConfigViewProps> = ({ activeGoals, onAddGoa
         </div>
       </section>
 
-      {/* Weekly Goals Section */}
       <section className="bg-gradient-to-br from-indigo-900/40 to-slate-900/40 p-6 rounded-[32px] border border-indigo-500/20 shadow-xl">
         <div className="flex justify-between items-center mb-4">
           <h4 className="text-sm font-black text-white uppercase tracking-tight">Cele i Nawyki</h4>
@@ -108,7 +106,6 @@ const LimitConfigView: React.FC<LimitConfigViewProps> = ({ activeGoals, onAddGoa
         </div>
       </section>
 
-      {/* Base Time Section */}
       <section className="bg-white/5 p-6 rounded-[32px] border border-white/10 backdrop-blur-md shadow-xl">
         <div className="flex justify-between items-start mb-6">
           <div>
@@ -137,7 +134,6 @@ const LimitConfigView: React.FC<LimitConfigViewProps> = ({ activeGoals, onAddGoa
         </div>
       </section>
 
-      {/* Action Buttons */}
       <div className="pt-4">
         <button 
           onClick={() => alert('Limity zapisane!')}

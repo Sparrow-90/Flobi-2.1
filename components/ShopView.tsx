@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { UserStats } from '../types';
+import { UserStats } from '../types.ts';
 
 interface ShopItem {
   id: string;
@@ -34,7 +34,6 @@ const ShopView: React.FC<ShopViewProps> = ({ stats, pendingGifts, onClaimGift, o
         <p className="text-sm text-white/80 font-bold uppercase tracking-wide">Wykorzystaj swoje zasoby</p>
       </header>
 
-      {/* NEW: Gifts Section */}
       {pendingGifts.length > 0 && (
         <section className="mb-8 space-y-3">
           <h3 className="text-[10px] font-black text-orange-600 uppercase tracking-widest flex items-center">
@@ -55,7 +54,6 @@ const ShopView: React.FC<ShopViewProps> = ({ stats, pendingGifts, onClaimGift, o
         </section>
       )}
 
-      {/* Resources Summary */}
       <div className="bg-indigo-950/80 backdrop-blur-md rounded-[32px] p-6 text-white mb-8 border border-white/10 shadow-2xl">
         <div className="flex items-center justify-between">
             <div className="flex flex-col">
@@ -70,7 +68,6 @@ const ShopView: React.FC<ShopViewProps> = ({ stats, pendingGifts, onClaimGift, o
         </div>
       </div>
 
-      {/* Shop Grid */}
       <div className="grid grid-cols-1 gap-4">
         {SHOP_ITEMS.map((item) => {
           const canAfford = stats.dewdrops >= item.price;
