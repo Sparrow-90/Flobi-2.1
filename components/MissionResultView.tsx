@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Mission } from '../types';
+import { Mission } from '../types.ts';
 
 interface MissionResultViewProps {
   mission: Mission;
@@ -26,7 +26,7 @@ const MissionResultView: React.FC<MissionResultViewProps> = ({
       <div className="absolute top-[-10%] right-[-10%] w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl" />
       <div className="absolute bottom-[-10%] left-[-10%] w-64 h-64 bg-blue-400/10 rounded-full blur-3xl" />
 
-      <div className="relative z-10 flex-1 flex flex-col justify-between px-6 py-8 h-full">
+      <div className="relative z-10 flex-1 flex flex-col justify-start px-6 py-8 h-full">
         
         <div className="flex flex-col items-center pt-8">
           <div className={`w-24 h-24 rounded-[40px] flex items-center justify-center text-6xl mb-6 shadow-2xl border-4 animate-bounce-subtle ${
@@ -52,7 +52,7 @@ const MissionResultView: React.FC<MissionResultViewProps> = ({
         </div>
 
         {/* Reward Grid */}
-        <div className="grid grid-cols-2 gap-4 w-full mb-8">
+        <div className="grid grid-cols-2 gap-4 w-full mb-6">
           <div className="bg-white/80 backdrop-blur-md border border-white p-5 rounded-[32px] flex flex-col items-center shadow-lg shadow-emerald-900/5">
             <span className="text-3xl mb-2">✨</span>
             <span className="text-2xl font-black bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">+{xpEarned}</span>
@@ -77,7 +77,7 @@ const MissionResultView: React.FC<MissionResultViewProps> = ({
         </div>
 
         {/* Vitality Progress Section */}
-        <div className="space-y-4 mb-8">
+        <div className="space-y-4">
           <div className="bg-white/60 backdrop-blur-md p-6 rounded-[32px] border border-white shadow-md relative overflow-hidden">
             <div className="flex justify-between items-center mb-3">
                 <div className="flex items-center">
@@ -96,8 +96,8 @@ const MissionResultView: React.FC<MissionResultViewProps> = ({
           </div>
         </div>
 
-        {/* Close Button */}
-        <div className="pt-4 pb-4 mt-auto">
+        {/* Close Button - 24px gap (mt-6) set below the vitality card */}
+        <div className="mt-6 pb-4">
           <button
             onClick={onClose}
             className={`w-full py-6 rounded-[32px] font-black text-xl uppercase tracking-tighter transition-all active:scale-95 shadow-xl ${
