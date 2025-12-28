@@ -56,6 +56,7 @@ const App: React.FC = () => {
   const [isSelectingOffline, setIsSelectingOffline] = useState(false);
   const [isSelectingGoal, setIsSelectingGoal] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showGiftConfirmation, setShowGiftConfirmation] = useState(false);
 
   const prevLevelRef = useRef(stats.level);
   const isFirstLoad = useRef(true);
@@ -133,6 +134,7 @@ const App: React.FC = () => {
         mission: { id: 'off-' + Date.now(), type: 'offline', title: `Misja Offline: ${stats.pendingOfflineMission.title}`, description: 'Brawo!', rewardMinutes },
         success: true, score: 1, total: 1, xpEarned, dewdropsEarned, fertilizerEarned: 0, vitalityBonus
       });
+      // Karta sukcesu pojawi się dopiero po przejściu do widoku dziecka (warunek renderowania)
     } else {
       setStats(prev => ({ ...prev, pendingOfflineMission: undefined }));
     }
@@ -146,6 +148,10 @@ const App: React.FC = () => {
       fertilizer: 'Super Nawóz'
     };
     setPendingGifts(prev => [...prev, { id: Math.random().toString(), type, label: labels[type] }]);
+    
+    // Potwierdzenie wysłania prezentu
+    setShowGiftConfirmation(true);
+    setTimeout(() => setShowGiftConfirmation(false), 2000);
   };
 
   const handleClaimGift = (giftId: string) => {
@@ -307,12 +313,24 @@ const App: React.FC = () => {
                 </div>
               )}
               {childTab === 'shop' && <div className="no-scrollbar"><ShopView stats={stats} pendingGifts={pendingGifts} onClaimGift={handleClaimGift} onBuy={(item) => setStats(s => ({...s, dewdrops: s.dewdrops - item.price}))} /></div>}
+              
+              {/* MODALE DZIECKA (W tym karta sukcesu po zatwierdzeniu przez rodzica) */}
+              {missionResult && <MissionResultView {...missionResult} onClose={() => setMissionResult(null)} />}
+              {offlineResult && <MissionResultView {...offlineResult} onClose={() => setOfflineResult(null)} />}
             </>
           ) : (
             <>
               {parentTab === 'stats' && <ParentDashboard stats={stats} />}
               {parentTab === 'signals' && <ParentSignals stats={stats} onSendGift={handleSendGift} onVerifyMission={handleVerifyOfflineMission} />}
               {parentTab === 'limits' && <LimitConfigView activeGoals={stats.activeGoals} onAddGoal={() => setIsSelectingGoal(true)} onSendGift={handleSendGift} />}
+              
+              {/* Potwierdzenie wysłania prezentu w panelu rodzica */}
+              {showGiftConfirmation && (
+                <div className="fixed top-24 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-widest shadow-2xl z-[1000] animate-in slide-in-from-top duration-300 flex items-center space-x-2">
+                  <span>Prezent wysłany!</span>
+                  <span>🎁</span>
+                </div>
+              )}
             </>
           )}
         </main>
@@ -336,7 +354,10 @@ const App: React.FC = () => {
           {view === 'parent' && (
             <>
               <button onClick={() => setParentTab('stats')} className={`flex flex-col items-center justify-center w-14 h-14 rounded-2xl ${parentTab === 'stats' ? 'bg-white text-emerald-950 shadow-lg' : 'text-white/40'}`}><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg><span className="text-[8px] font-black uppercase mt-1">Raport</span></button>
-              <button onClick={() => setParentTab('signals')} className={`flex flex-col items-center justify-center w-14 h-14 rounded-2xl ${parentTab === 'signals' ? 'bg-white text-emerald-950 shadow-lg' : 'text-white/40'}`}><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><span className="text-[8px] font-black uppercase mt-1">Sygnały</span></button>
+              <button onClick={() => setParentTab('signals')} className={`flex flex-col items-center justify-center w-14 h-14 rounded-2xl relative ${parentTab === 'signals' ? 'bg-white text-emerald-950 shadow-lg' : 'text-white/40'}`}>
+                {stats.pendingOfflineMission && <div className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50" />}
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><span className="text-[8px] font-black uppercase mt-1">Sygnały</span>
+              </button>
               <button onClick={() => setParentTab('limits')} className={`flex flex-col items-center justify-center w-14 h-14 rounded-2xl ${parentTab === 'limits' ? 'bg-white text-emerald-950 shadow-lg' : 'text-white/40'}`}><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg><span className="text-[8px] font-black uppercase mt-1">Limity</span></button>
             </>
           )}
@@ -357,7 +378,6 @@ const App: React.FC = () => {
         
         {levelUpData && <LevelUpView newLevel={levelUpData.level} newStage={levelUpData.stage} petName={stats.petName} onClose={() => setLevelUpData(null)} />}
         {activeMission && <MissionView mission={activeMission} onComplete={handleMissionComplete} onCancel={() => setActiveMission(null)} />}
-        {missionResult && <MissionResultView {...missionResult} onClose={() => setMissionResult(null)} />}
         {isGenerating && <div className="fixed inset-0 bg-black/90 z-[1000] flex flex-col items-center justify-center"><div className="w-16 h-16 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin mb-4" /><p className="font-black text-emerald-400 uppercase">Generuję wyzwanie...</p></div>}
       </div>
     </div>
