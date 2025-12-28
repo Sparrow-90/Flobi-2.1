@@ -2,9 +2,10 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Mission } from "../types.ts";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export async function generateEducationalMission(type: Mission['type'], subject?: string): Promise<Mission> {
+  // Inicjalizacja instancji bezpośrednio przed użyciem, aby uniknąć błędów przy ładowaniu modułu
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  
   const isDaily = type === 'daily';
   const subjectContext = subject ? `z przedmiotu: ${subject}` : "";
   const questionsCount = isDaily ? 5 : 3;

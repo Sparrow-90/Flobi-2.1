@@ -93,7 +93,11 @@ const App: React.FC = () => {
       setActiveMission(mission);
     } catch (error) {
       console.error("Failed to generate mission", error);
-      alert("Ups! Nie udało się przygotować misji.");
+      // Bardziej opisowy błąd dla użytkownika
+      const errorMsg = error instanceof Error && error.message.includes("API Key") 
+        ? "Błąd konfiguracji: Brak klucza API Gemini." 
+        : "Ups! Nie udało się przygotować misji. Sprawdź połączenie.";
+      alert(errorMsg);
     } finally {
       setIsGenerating(false);
     }
@@ -330,7 +334,7 @@ const App: React.FC = () => {
         <nav className="absolute bottom-6 left-6 right-6 h-20 border border-white/20 flex items-center justify-around px-4 z-[100] backdrop-blur-xl rounded-[32px] shadow-2xl bg-emerald-950/80">
           {view === 'child' && (
             <>
-              <button onClick={() => setChildTab('garden')} className={`flex flex-col items-center justify-center w-14 h-14 rounded-2xl ${childTab === 'garden' ? "bg-white text-emerald-900 shadow-lg" : "text-white/40"}`}><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg><span className="text-[8px] font-black uppercase mt-1">Ogród</span></button>
+              <button onClick={() => { setView('child'); setChildTab('garden'); }} className={`flex flex-col items-center justify-center w-14 h-14 rounded-2xl ${childTab === 'garden' ? "bg-white text-emerald-900 shadow-lg" : "text-white/40"}`}><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg><span className="text-[8px] font-black uppercase mt-1">Ogród</span></button>
               <button onClick={() => setChildTab('missions')} className={`flex flex-col items-center justify-center w-14 h-14 rounded-2xl relative ${childTab === 'missions' ? "bg-white text-emerald-900 shadow-lg" : "text-white/40"}`}>
                 {pendingGoalsCount > 0 && <div className="absolute top-1 right-1 w-3 h-3 bg-orange-500 rounded-full animate-pulse shadow-lg" />}
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
