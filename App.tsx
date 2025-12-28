@@ -93,7 +93,6 @@ const App: React.FC = () => {
       setActiveMission(mission);
     } catch (error) {
       console.error("Failed to generate mission", error);
-      // Bardziej opisowy błąd dla użytkownika
       const errorMsg = error instanceof Error && error.message.includes("API Key") 
         ? "Błąd konfiguracji: Brak klucza API Gemini." 
         : "Ups! Nie udało się przygotować misji. Sprawdź połączenie.";
@@ -311,9 +310,6 @@ const App: React.FC = () => {
                 </div>
               )}
               {childTab === 'shop' && <div className="no-scrollbar"><ShopView stats={stats} pendingGifts={pendingGifts} onClaimGift={handleClaimGift} onBuy={(item) => setStats(s => ({...s, dewdrops: s.dewdrops - item.price}))} /></div>}
-              
-              {missionResult && <MissionResultView {...missionResult} onClose={() => setMissionResult(null)} />}
-              {offlineResult && <MissionResultView {...offlineResult} onClose={() => setOfflineResult(null)} />}
             </>
           ) : (
             <>
@@ -374,6 +370,11 @@ const App: React.FC = () => {
         
         {levelUpData && <LevelUpView newLevel={levelUpData.level} newStage={levelUpData.stage} petName={stats.petName} onClose={() => setLevelUpData(null)} />}
         {activeMission && <MissionView mission={activeMission} onComplete={handleMissionComplete} onCancel={() => setActiveMission(null)} />}
+        
+        {/* Widoki wyników umieszczone tutaj, aby z-index 200 przykrywał również dolny nav */}
+        {missionResult && <MissionResultView {...missionResult} onClose={() => setMissionResult(null)} />}
+        {offlineResult && <MissionResultView {...offlineResult} onClose={() => setOfflineResult(null)} />}
+
         {isGenerating && <div className="fixed inset-0 bg-black/90 z-[1000] flex flex-col items-center justify-center"><div className="w-16 h-16 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin mb-4" /><p className="font-black text-emerald-400 uppercase">Generuję wyzwanie...</p></div>}
       </div>
     </div>
