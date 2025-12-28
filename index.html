@@ -5,6 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FLOBI</title>
+    <script>
+        // Suppress Tailwind Play CDN production warning to clean up console
+        (function() {
+            const orgWarn = console.warn;
+            console.warn = function(...args) {
+                if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) return;
+                orgWarn.apply(console, args);
+            };
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -16,16 +26,18 @@
             height: 100vh;
         }
         
+        /* Ukrywanie paska przewijania dla wszystkich przeglądarek */
         .no-scrollbar::-webkit-scrollbar {
             display: none !important;
             width: 0 !important;
             height: 0 !important;
         }
         .no-scrollbar {
-            -ms-overflow-style: none !important;
-            scrollbar-width: none !important;
+            -ms-overflow-style: none !important;  /* IE i Edge */
+            scrollbar-width: none !important;  /* Firefox */
         }
 
+        /* Globalne ukrycie dla pewności w widoku mobilnym */
         * {
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -45,6 +57,7 @@
   }
 }
 </script>
+<script type="module" src="./index.tsx"></script>
 </head>
 <body class="bg-gray-100 overflow-hidden">
     <div id="root"></div>
