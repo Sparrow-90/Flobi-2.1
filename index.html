@@ -3,31 +3,37 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FLOBI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SmartParent z EduPlant</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --app-height: 100%;
+        }
+        
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-tap-highlight-color: transparent;
             overflow: hidden;
             width: 100vw;
             height: 100vh;
+            height: -webkit-fill-available;
+            background-color: #000;
         }
         
-        /* Ukrywanie paska przewijania dla wszystkich przeglądarek */
+        /* Absolutne ukrywanie pasków przewijania */
         .no-scrollbar::-webkit-scrollbar {
             display: none !important;
             width: 0 !important;
             height: 0 !important;
         }
         .no-scrollbar {
-            -ms-overflow-style: none !important;  /* IE i Edge */
-            scrollbar-width: none !important;  /* Firefox */
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
         }
 
-        /* Globalne ukrycie dla pewności w widoku mobilnym */
+        /* Globalne wyłączenie scrollbarów na wypadek renderowania dynamicznego */
         * {
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -35,11 +41,16 @@
         *::-webkit-scrollbar {
             display: none;
         }
+
+        /* Poprawka dla iOS - unikanie przesunięć layoutu przy klawiaturze */
+        input, select, textarea {
+            font-size: 16px !important;
+        }
     </style>
 <script type="importmap">
 {
   "imports": {
-    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "recharts": "https://esm.sh/recharts@2.15.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
@@ -48,7 +59,7 @@
 }
 </script>
 </head>
-<body class="bg-gray-100 overflow-hidden">
+<body class="no-scrollbar">
     <div id="root"></div>
 </body>
 </html>

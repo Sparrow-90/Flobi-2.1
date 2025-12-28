@@ -43,10 +43,26 @@ export async function generateEducationalMission(type: Mission['type'], subject?
     }
   });
 
-  const data = JSON.parse(response.text);
-  return {
-    ...data,
-    id: Math.random().toString(36).substr(2, 9),
-    type
-  };
+  try {
+    // Bezpieczne czyszczenie odpowiedzi z ewentualnych tagów markdown ```json ... ```
+    let text = response.text;
+    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    const data = JSON.parse(text);
+    
+    return {
+      ...data,
+      id: Math.random().toString(36).substr(2, 9),
+      type
+    };
+  } catch (e) {
+    console.error("Gemini JSON Parsing Error:", e);
+    // Rezerwowa misja w przypadku błędu parsowania
+    return {
+      id: 'fallback-' + Date.now(),
+      type: 'logic',
+      title: 'Szybki Trening Umysłu',
+      description: 'AI odpoczywa, ale Ty nie musisz! Rozwiąż to zadanie: Wymień 5 słów na literę Twojego imienia.',
+      rewardMinutes: 10
+    };
+  }
 }
