@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Mission } from '../types';
+import { Mission } from '../types.ts';
 
 interface MissionViewProps {
   mission: Mission;
@@ -20,7 +20,6 @@ const MissionView: React.FC<MissionViewProps> = ({ mission, onComplete, onCancel
     if (currentQuestion < mission.questions!.length - 1) {
       setCurrentQuestion(q => q + 1);
     } else {
-      // All done
       const total = mission.questions!.length;
       const isSuccess = newScore >= total / 2;
       onComplete(isSuccess, newScore, total);
@@ -29,8 +28,6 @@ const MissionView: React.FC<MissionViewProps> = ({ mission, onComplete, onCancel
 
   return (
     <div className="absolute inset-0 bg-gradient-to-b from-[#e0f7fa] via-[#e8f5e9] to-[#f8fafc] z-[200] flex flex-col p-6 overflow-hidden animate-in slide-in-from-bottom duration-500">
-      
-      {/* Dekoracyjne elementy tła dla spójności z ogrodem */}
       <div className="absolute top-[-5%] right-[-10%] w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-[20%] left-[-15%] w-80 h-80 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -50,7 +47,6 @@ const MissionView: React.FC<MissionViewProps> = ({ mission, onComplete, onCancel
         <div className="w-12" />
       </header>
 
-      {/* Main Content Area */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center w-full overflow-y-auto no-scrollbar pb-10">
         {mission.questions ? (
           <div className="w-full space-y-6">
@@ -99,7 +95,6 @@ const MissionView: React.FC<MissionViewProps> = ({ mission, onComplete, onCancel
         )}
       </div>
 
-      {/* Progress Dots */}
       {mission.questions && (
         <div className="relative z-10 flex justify-center items-center space-x-3 py-8">
             {mission.questions.map((_, i) => (

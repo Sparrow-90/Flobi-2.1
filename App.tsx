@@ -1,18 +1,18 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { GrowthStage, UserStats, Mission, WeeklyGoal, OfflineChallenge } from './types';
-import { generateEducationalMission } from './services/geminiService';
-import PlantView from './components/PlantView';
-import MissionView from './components/MissionView';
-import ParentDashboard from './components/ParentDashboard';
-import ParentSignals from './components/ParentSignals';
-import SubjectSelector from './components/SubjectSelector';
-import ShopView from './components/ShopView';
-import MissionResultView from './components/MissionResultView';
-import LimitConfigView from './components/LimitConfigView';
-import WeeklyGoalSelector from './components/WeeklyGoalSelector';
-import OfflineMissionSelector from './components/OfflineMissionSelector';
-import LevelUpView from './components/LevelUpView';
+import { GrowthStage, UserStats, Mission, WeeklyGoal, OfflineChallenge } from './types.ts';
+import { generateEducationalMission } from './services/geminiService.ts';
+import PlantView from './components/PlantView.tsx';
+import MissionView from './components/MissionView.tsx';
+import ParentDashboard from './components/ParentDashboard.tsx';
+import ParentSignals from './components/ParentSignals.tsx';
+import SubjectSelector from './components/SubjectSelector.tsx';
+import ShopView from './components/ShopView.tsx';
+import MissionResultView from './components/MissionResultView.tsx';
+import LimitConfigView from './components/LimitConfigView.tsx';
+import WeeklyGoalSelector from './components/WeeklyGoalSelector.tsx';
+import OfflineMissionSelector from './components/OfflineMissionSelector.tsx';
+import LevelUpView from './components/LevelUpView.tsx';
 
 interface MissionResult {
   mission: Mission;
@@ -61,7 +61,6 @@ const App: React.FC = () => {
   const prevLevelRef = useRef(stats.level);
   const isFirstLoad = useRef(true);
 
-  // Sprawdź czy są nowe propozycje celów od rodzica
   const pendingGoalsCount = stats.activeGoals.filter(g => g.status === 'pending').length;
 
   useEffect(() => {
@@ -134,7 +133,6 @@ const App: React.FC = () => {
         mission: { id: 'off-' + Date.now(), type: 'offline', title: `Misja Offline: ${stats.pendingOfflineMission.title}`, description: 'Brawo!', rewardMinutes },
         success: true, score: 1, total: 1, xpEarned, dewdropsEarned, fertilizerEarned: 0, vitalityBonus
       });
-      // Karta sukcesu pojawi się dopiero po przejściu do widoku dziecka (warunek renderowania)
     } else {
       setStats(prev => ({ ...prev, pendingOfflineMission: undefined }));
     }
@@ -148,8 +146,6 @@ const App: React.FC = () => {
       fertilizer: 'Super Nawóz'
     };
     setPendingGifts(prev => [...prev, { id: Math.random().toString(), type, label: labels[type] }]);
-    
-    // Potwierdzenie wysłania prezentu
     setShowGiftConfirmation(true);
     setTimeout(() => setShowGiftConfirmation(false), 2000);
   };
@@ -216,7 +212,6 @@ const App: React.FC = () => {
                     <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Zdobądź czas na zabawę</p>
                   </header>
 
-                  {/* NOWA PROPOZYCJA OD RODZICA */}
                   {stats.activeGoals.filter(g => g.status === 'pending').map(goal => (
                     <div key={goal.id} className="w-full bg-gradient-to-br from-indigo-500 to-purple-600 p-6 rounded-[32px] border border-white shadow-2xl relative overflow-hidden animate-in slide-in-from-top duration-500">
                       <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-8 -mt-8 blur-xl" />
@@ -250,7 +245,6 @@ const App: React.FC = () => {
                   ))}
 
                   <section className="space-y-4">
-                    {/* EPIC DAILY MISSION CARD */}
                     <div className="w-full bg-gradient-to-br from-[#FF4E50] to-[#F9D423] p-7 rounded-[40px] text-white shadow-2xl shadow-orange-500/30 relative overflow-hidden group border-b-8 border-orange-700/30">
                       <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10 blur-2xl" />
                       <div className="flex justify-between items-start relative z-10 mb-4">
@@ -314,7 +308,6 @@ const App: React.FC = () => {
               )}
               {childTab === 'shop' && <div className="no-scrollbar"><ShopView stats={stats} pendingGifts={pendingGifts} onClaimGift={handleClaimGift} onBuy={(item) => setStats(s => ({...s, dewdrops: s.dewdrops - item.price}))} /></div>}
               
-              {/* MODALE DZIECKA (W tym karta sukcesu po zatwierdzeniu przez rodzica) */}
               {missionResult && <MissionResultView {...missionResult} onClose={() => setMissionResult(null)} />}
               {offlineResult && <MissionResultView {...offlineResult} onClose={() => setOfflineResult(null)} />}
             </>
@@ -324,7 +317,6 @@ const App: React.FC = () => {
               {parentTab === 'signals' && <ParentSignals stats={stats} onSendGift={handleSendGift} onVerifyMission={handleVerifyOfflineMission} />}
               {parentTab === 'limits' && <LimitConfigView activeGoals={stats.activeGoals} onAddGoal={() => setIsSelectingGoal(true)} onSendGift={handleSendGift} />}
               
-              {/* Potwierdzenie wysłania prezentu w panelu rodzica */}
               {showGiftConfirmation && (
                 <div className="fixed top-24 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-widest shadow-2xl z-[1000] animate-in slide-in-from-top duration-300 flex items-center space-x-2">
                   <span>Prezent wysłany!</span>

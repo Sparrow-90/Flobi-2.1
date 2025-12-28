@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { GrowthStage } from '../types';
-import { STAGE_CONFIG } from '../constants';
+import { GrowthStage } from '../types.ts';
+import { STAGE_CONFIG } from '../constants.ts';
 
 interface PlantViewProps {
   petName: string;
@@ -76,24 +76,18 @@ const PlantView: React.FC<PlantViewProps> = ({
   const circumference = Math.PI * radius;
   const strokeDasharray = `${xpProgress * circumference} ${circumference}`;
 
-  // Evolution intensity logic
   const auraOpacity = Math.min(0.6, 0.1 + (level * 0.05));
   const auraScale = 1 + (level * 0.05);
   const showEvoParticles = level >= 3;
 
   return (
     <div className="relative w-full flex flex-col items-center select-none min-h-full overflow-hidden">
-      
-      {/* TOP SECTION: ARC & STADIUM */}
       <div className="relative z-10 w-full flex flex-col items-center pt-24 pb-12 min-h-[420px]">
-        
-        {/* Stadium rozwoju */}
         <div className="flex flex-col items-center mb-2 pointer-events-none">
           <span className="text-[8px] font-normal text-white/80 uppercase tracking-[0.4em] drop-shadow-md mb-1">Stadium Rozwoju</span>
           <span className="text-xl font-normal text-white uppercase tracking-tighter drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">{stage}</span>
         </div>
 
-        {/* Level Arc */}
         <div className="absolute top-32 inset-x-0 flex justify-center pointer-events-none opacity-80">
           <svg width="340" height="200" viewBox="0 0 340 200">
             <path 
@@ -115,7 +109,6 @@ const PlantView: React.FC<PlantViewProps> = ({
           </svg>
         </div>
 
-        {/* Side Resources */}
         <div className="absolute top-44 right-6 flex flex-col space-y-6 z-30">
           <div className="flex flex-col items-center drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)] animate-bounce-slow">
             <span className="text-4xl mb-1">💧</span>
@@ -127,10 +120,8 @@ const PlantView: React.FC<PlantViewProps> = ({
           </div>
         </div>
 
-        {/* Character Platform */}
         <div className="absolute top-[335px] left-1/2 -translate-x-1/2 w-44 h-8 bg-black/25 rounded-[100%] blur-md scale-x-125 animate-pulse" />
 
-        {/* Evolution Aura (Background Glow) */}
         <div 
           className="absolute top-[260px] left-1/2 -translate-x-1/2 w-48 h-48 rounded-full blur-[60px] pointer-events-none transition-all duration-1000"
           style={{ 
@@ -139,12 +130,10 @@ const PlantView: React.FC<PlantViewProps> = ({
           }}
         />
 
-        {/* Flobi Main Model */}
         <div 
           onClick={handleInteraction}
           className={`relative mt-4 flex flex-col items-center transition-all duration-500 cursor-pointer ${isJumping ? 'animate-jump' : 'animate-float'}`}
         >
-          {/* Visual Evo Particles for high levels */}
           {showEvoParticles && (
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute -top-4 -left-4 text-xl animate-float-fast opacity-40">🍃</div>
@@ -177,9 +166,7 @@ const PlantView: React.FC<PlantViewProps> = ({
         </div>
       </div>
 
-      {/* INFO CARD */}
       <div className="relative z-20 w-full bg-white rounded-t-[40px] shadow-[0_-20px_60px_rgba(0,0,0,0.15)] flex flex-col p-8 text-slate-800 -mt-10">
-        
         <div className="flex flex-col items-center">
           <div className="relative flex items-center justify-center mb-4 group w-full min-h-[44px]">
             {isEditingName ? (
@@ -227,7 +214,6 @@ const PlantView: React.FC<PlantViewProps> = ({
           </div>
         </div>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-3 gap-4 mt-8 pb-8 border-b border-slate-100 text-center">
           <div className="flex flex-col">
             <span className="text-2xl font-black text-slate-900 leading-none">{screenTimeMinutes}m</span>
@@ -245,7 +231,6 @@ const PlantView: React.FC<PlantViewProps> = ({
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="space-y-4 pt-8 pb-32">
           <button 
             onClick={onUseDewdrop}
